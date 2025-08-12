@@ -30,6 +30,7 @@ class Reminder extends StatelessWidget {
             fontWeight: FontWeight.normal,
           ),
         ),
+        scaffoldBackgroundColor: Colors.white,
       ),
       home: Bottomscreen(),
     );
