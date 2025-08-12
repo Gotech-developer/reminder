@@ -37,7 +37,7 @@ class CreatereminderscreenState extends State<Createreminderscreen> {
               fontWeight: FontWeight.bold,
             ),
             decoration: InputDecoration(
-              hintText: 'e.g buy groceries',
+              hintText: 'Title',
               hintStyle: TextStyle(color: Colors.white),
               fillColor: Colors.black,
               filled: true,
@@ -52,6 +52,8 @@ class CreatereminderscreenState extends State<Createreminderscreen> {
 
               style: TextStyle(fontSize: 18),
               decoration: InputDecoration(
+                hintText: 'body',
+                hintStyle: TextStyle(color: Colors.black, fontSize: 16),
                 contentPadding: EdgeInsets.only(top: 8, right: 16, left: 16),
                 border: OutlineInputBorder(borderSide: BorderSide.none),
               ),

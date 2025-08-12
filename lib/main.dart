@@ -3,6 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:reminder/firebase_options.dart';
 import 'package:reminder/screens/bottomscreen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:reminder/screens/homescreen.dart';
+import 'package:reminder/screens/signinscreen.dart';
+import 'package:reminder/screens/signupscreen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
