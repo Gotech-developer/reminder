@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:reminder/firebase_options.dart';
 import 'package:reminder/screens/bottomscreen.dart';
+import 'package:firebase_core/firebase_core.dart';
+//import 'package:reminder/firebase_options.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(Reminder());
 }
 
@@ -30,6 +35,7 @@ class Reminder extends StatelessWidget {
             fontWeight: FontWeight.normal,
           ),
         ),
+        scaffoldBackgroundColor: Colors.white,
       ),
       home: Bottomscreen(),
     );

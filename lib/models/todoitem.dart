@@ -1,12 +1,24 @@
 class Todoitem {
-  final String date;
-  final int time;
-  final String title;
-  final String decription;
+  String date;
+  int time;
+  String title;
+  final String body;
   Todoitem({
     required this.date,
     required this.time,
     required this.title,
-    required this.decription,
+    required this.body,
   });
+
+  factory Todoitem.fromMap(Map<String, dynamic> map) {
+    return Todoitem(
+      date: map['date'],
+      time: map['time'],
+      title: map['title'],
+      body: map['description'],
+    );
+  }
+  Map<String, dynamic> toMap() {
+    return {'date': date, 'time': time, 'title': title, 'description': body};
+  }
 }
