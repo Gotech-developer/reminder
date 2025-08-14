@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:reminder/models/todoitem.dart';
 
 class Firestoreservices {
@@ -7,8 +8,8 @@ class Firestoreservices {
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
   Future<void> sendToFireStore(
-    String date,
-    String time,
+    String? date,
+    String? time,
     String title,
     String body,
   ) async {

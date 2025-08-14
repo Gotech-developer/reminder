@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
+
 class Todoitem {
-  String date;
-  int time;
+  String? date;
+  String? time;
   String title;
   final String body;
   Todoitem({

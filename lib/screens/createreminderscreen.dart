@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:reminder/services/firestoreservices.dart';
+import 'package:intl/intl.dart';
 
 class Createreminderscreen extends StatefulWidget {
   const Createreminderscreen({super.key});
@@ -7,6 +9,72 @@ class Createreminderscreen extends StatefulWidget {
 }
 
 class CreatereminderscreenState extends State<Createreminderscreen> {
+  TextEditingController titleController = TextEditingController();
+  TextEditingController bodyController = TextEditingController();
+
+  DateTime selectedDate = DateTime.now();
+  TimeOfDay selectedTime = TimeOfDay.now();
+
+  //pickDate function
+  Future<void> pickDate() async {
+    final now = DateTime.now();
+    DateTime? picked = await showDatePicker(
+      helpText: 'Choose a date',
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData(
+            datePickerTheme: DatePickerThemeData(
+              backgroundColor: Colors.blue,
+              headerBackgroundColor: Colors.white,
+              dayStyle: TextStyle(color: Colors.white),
+            ),
+          ),
+          child: child!,
+        );
+      },
+      context: context,
+      firstDate: now,
+      initialDate: now,
+      lastDate: DateTime(2100),
+    );
+    if (picked != null) {
+      setState(() {
+        selectedDate = picked;
+      });
+      print('selectedDate: $selectedDate');
+    }
+  }
+
+  //pickTime Funtion
+  Future<void> pickedTime() async {
+    final now = TimeOfDay.now();
+    TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: now,
+    );
+    if (pickedTime != null) {
+      setState(() {
+        selectedTime = pickedTime;
+      });
+      print('selectedTime: $selectedTime');
+    }
+  }
+
+  Future<void> sentToFireStore() async {
+    final selectedDateFormat = DateFormat().format(selectedDate);
+    final selectedTimeFormat = selectedTime.format(context);
+
+    final title = titleController.text.trim().toLowerCase();
+    final body = bodyController.text.trim().toLowerCase();
+    final firestoreservices = Firestoreservices();
+    await firestoreservices.sendToFireStore(
+      selectedDateFormat,
+      selectedTimeFormat,
+      title,
+      body,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,23 +82,30 @@ class CreatereminderscreenState extends State<Createreminderscreen> {
       body: Column(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                decoration: BoxDecoration(color: Colors.black),
-                child: Row(
-                  children: [
-                    Text('date', style: TextStyle(color: Colors.white)),
-                    SizedBox(width: 20),
-                    Text('Time', style: TextStyle(color: Colors.white)),
-                  ],
+              TextButton(
+                style: TextButton.styleFrom(backgroundColor: Colors.blueGrey),
+                onPressed: () => pickDate(),
+                child: Text(
+                  DateFormat('yyyy-MM-dd').format(selectedDate),
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              SizedBox(width: 8),
+              TextButton(
+                style: TextButton.styleFrom(backgroundColor: Colors.blueGrey),
+                onPressed: () => pickedTime(),
+                child: Text(
+                  selectedTime.format(context),
+                  style: TextStyle(color: Colors.white),
                 ),
               ),
             ],
           ),
           SizedBox(height: 8),
           TextField(
-            cursorColor: Colors.white,
+            controller: titleController,
+            cursorColor: Colors.black,
             style: TextStyle(
               color: Colors.white,
               fontSize: 24,
@@ -39,14 +114,15 @@ class CreatereminderscreenState extends State<Createreminderscreen> {
             decoration: InputDecoration(
               hintText: 'Title',
               hintStyle: TextStyle(color: Colors.white),
-              fillColor: Colors.black,
-              filled: true,
+              fillColor: Colors.blueGrey,
 
+              filled: true,
               border: OutlineInputBorder(borderSide: BorderSide.none),
             ),
           ),
           Expanded(
             child: TextField(
+              controller: bodyController,
               maxLines: null,
               minLines: null,
 
